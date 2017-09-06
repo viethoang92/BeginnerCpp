@@ -31,12 +31,19 @@ Game::Game(MainWindow& wnd)
 	std::mt19937 rng ( rd() );
 	std::uniform_int_distribution<int> xDist( 0,770);
 	std::uniform_int_distribution<int> yDist( 0,570);
-	poo0X = xDist(rng);
-	poo0Y = yDist(rng);
-	poo1X = xDist(rng);
-	poo1Y = yDist(rng);
-	poo2X = xDist(rng);
-	poo2Y = yDist(rng);
+	poo0.x = xDist(rng);
+	poo0.y = yDist(rng);
+	poo1.x = xDist(rng);
+	poo1.y = yDist(rng);
+	poo2.x = xDist(rng);
+	poo2.y = yDist(rng);
+
+	poo0.vx = 1;
+	poo0.vy = 1;
+	poo1.vx = -1;
+	poo1.vy = 1;
+	poo2.vx = -1;
+	poo2.vy = 1;
 }
 
 void Game::Go()
@@ -71,31 +78,21 @@ void Game::UpdateModel()
 		dudeX = ClampScreenX(dudeX, dudeWidth);
 		dudeY = ClampScreenY(dudeY, dudeHeight);
 
-		poo0X += v0X;
-		poo0Y += v0Y;
-		poo1X += v1X;
-		poo1Y += v1Y;
-		poo2X += v2X;
-		poo2Y += v2Y;
+		poo0.Update();
+		poo1.Update();
+		poo2.Update();
 
-		v0X = HitWallX(poo0X, v0X, pooWidth);
-		v0Y = HitWallY(poo0Y, v0Y, pooHeight);
-		v1X = HitWallX(poo1X, v1X, pooWidth);
-		v1Y = HitWallY(poo1Y, v1Y, pooHeight);
-		v2X = HitWallX(poo2X, v2X, pooWidth);
-		v2Y = HitWallY(poo2Y, v2Y, pooHeight);
-
-		if (IsColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo0X, poo0Y, pooWidth, pooHeight))
+		if (IsColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo0.x, poo0.y, pooWidth, pooHeight))
 		{
-			poo0IsEaten = true;
+			poo0.isEaten = true;
 		}
-		if (IsColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo1X, poo1Y, pooWidth, pooHeight))
+		if (IsColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo1.x, poo1.y, pooWidth, pooHeight))
 		{
-			poo1IsEaten = true;
+			poo1.isEaten = true;
 		}
-		if (IsColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo2X, poo2Y, pooWidth, pooHeight))
+		if (IsColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo2.x, poo2.y, pooWidth, pooHeight))
 		{
-			poo2IsEaten = true;
+			poo2.isEaten = true;
 		}
 	}
 	else
@@ -29061,18 +29058,6 @@ bool Game::IsColliding(int x0, int y0, int width0, int height0,
 		y0 <= bottom1;
 }
 
-int Game::HitWallX(int x, int vx, int width)
-{
-	if (x <= 0 || x + width >= gfx.ScreenWidth) return -vx;
-	else return vx;
-}
-
-int Game::HitWallY(int y, int vy, int height)
-{
-	if (y <= 0 || y + height >= gfx.ScreenHeight) return -vy;
-	else return vy;
-}
-
 void Game::ComposeFrame()
 {
 	if (!isStarted)
@@ -29081,23 +29066,23 @@ void Game::ComposeFrame()
 	}
 	else
 	{
-		if (poo0IsEaten && poo1IsEaten && poo2IsEaten)
+		if (poo0.isEaten && poo1.isEaten && poo2.isEaten)
 		{
 			DrawGameOver(358, 268);
 		}
 
 		DrawFace(dudeX, dudeY);
-		if (!poo0IsEaten)
+		if (!poo0.isEaten)
 		{
-			DrawPoo(poo0X + v0X, poo0Y +v0Y);
+			DrawPoo(poo0.x + poo0.vx, poo0.y +poo0.vy);
 		}
-		if (!poo1IsEaten)
+		if (!poo1.isEaten)
 		{
-			DrawPoo(poo1X + v1X, poo1Y + v1Y);
+			DrawPoo(poo1.x + poo1.vx, poo1.y + poo1.vy);
 		}
-		if (!poo2IsEaten)
+		if (!poo2.isEaten)
 		{
-			DrawPoo(poo2X + v2X, poo2Y + v2Y);
+			DrawPoo(poo2.x + poo2.vx, poo2.y + poo2.vy);
 		}
 	}
 }
