@@ -57,6 +57,19 @@ void Game::UpdateModel()
 
 	dudeX = ClampScreenX(dudeX, dudeWidth);
 	dudeY = ClampScreenY(dudeY, dudeHeight);
+
+	if (IsColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo0X, poo0Y, pooWidth, pooHeight))
+	{
+		poo0IsEaten = true;
+	}
+	if (IsColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo1X, poo1Y, pooWidth, pooHeight))
+	{
+		poo1IsEaten = true;
+	}
+	if (IsColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo2X, poo2Y, pooWidth, pooHeight))
+	{
+		poo2IsEaten = true;
+	}
 }
 
 void Game::DrawFace(int x, int y)
@@ -650,10 +663,34 @@ int Game::ClampScreenY(int y, int height)
 	}
 }
 
+bool Game::IsColliding(int x0, int y0, int width0, int height0, 
+	int x1, int y1, int width1, int height1)
+{
+	const int right0 = x0 + width0;
+	const int bottom0 = y0 + height0;
+	const int right1 = x1 + width1;
+	const int bottom1 = y1 + height1;
+
+	return
+		right0 >= x1 &&
+		x0 <= right1 &&
+		bottom0 >= y1 && 
+		y0 <= bottom1;
+}
+
 void Game::ComposeFrame()
 {
 	DrawFace(dudeX, dudeY);
-	DrawPoo(poo0X, poo0Y);
-	DrawPoo(poo1X, poo1Y);
-	DrawPoo(poo2X, poo2Y);
+	if (!poo0IsEaten)
+	{
+		DrawPoo(poo0X, poo0Y);
+	}
+	if (!poo1IsEaten)
+	{
+		DrawPoo(poo1X, poo1Y);
+	}
+	if (!poo2IsEaten)
+	{
+		DrawPoo(poo2X, poo2Y);
+	}
 }
