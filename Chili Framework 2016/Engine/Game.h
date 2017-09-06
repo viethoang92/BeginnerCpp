@@ -39,6 +39,7 @@ private:
 	void DrawFace(int x, int y);
 	void DrawPoo(int x, int y);
 	void DrawGameOver(int x, int y);
+	void DrawTitleScreen(int x, int y);
 	int ClampScreenX(int x, int width);
 	int ClampScreenY(int y, int height);
 	bool IsColliding(int x0, int y0, int width0, int height0,
@@ -64,5 +65,6 @@ private:
 	bool poo2IsEaten = false;
 	int pooWidth = 24;
 	int pooHeight = 24;
+	bool isStarted = false;
 	/********************************/
 };
