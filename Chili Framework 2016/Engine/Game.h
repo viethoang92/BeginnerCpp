@@ -74,5 +74,6 @@ private:
 	int pooWidth = 24;
 	int pooHeight = 24;
 	bool isStarted = false;
+	bool colliding = false;
 	/********************************/
 };

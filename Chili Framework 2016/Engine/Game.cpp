@@ -87,15 +87,15 @@ void Game::UpdateModel()
 
 		if (IsColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo0X, poo0Y, pooWidth, pooHeight))
 		{
-			poo0IsEaten = true;
+			colliding = true;
 		}
 		if (IsColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo1X, poo1Y, pooWidth, pooHeight))
 		{
-			poo1IsEaten = true;
+			colliding = true;
 		}
 		if (IsColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo2X, poo2Y, pooWidth, pooHeight))
 		{
-			poo2IsEaten = true;
+			colliding = true;
 		}
 	}
 	else
@@ -29081,12 +29081,18 @@ void Game::ComposeFrame()
 	}
 	else
 	{
-		if (poo0IsEaten && poo1IsEaten && poo2IsEaten)
+		if (colliding)
 		{
+			poo0IsEaten = true;
+			poo1IsEaten = true;
+			poo2IsEaten = true;
 			DrawGameOver(358, 268);
 		}
+		else
+		{
+			DrawFace(dudeX, dudeY);
+		}
 
-		DrawFace(dudeX, dudeY);
 		if (!poo0IsEaten)
 		{
 			DrawPoo(poo0X + v0X, poo0Y +v0Y);
