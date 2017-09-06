@@ -71,6 +71,20 @@ void Game::UpdateModel()
 		dudeX = ClampScreenX(dudeX, dudeWidth);
 		dudeY = ClampScreenY(dudeY, dudeHeight);
 
+		poo0X += v0X;
+		poo0Y += v0Y;
+		poo1X += v1X;
+		poo1Y += v1Y;
+		poo2X += v2X;
+		poo2Y += v2Y;
+
+		v0X = HitWallX(poo0X, v0X, pooWidth);
+		v0Y = HitWallY(poo0Y, v0Y, pooHeight);
+		v1X = HitWallX(poo1X, v1X, pooWidth);
+		v1Y = HitWallY(poo1Y, v1Y, pooHeight);
+		v2X = HitWallX(poo2X, v2X, pooWidth);
+		v2Y = HitWallY(poo2Y, v2Y, pooHeight);
+
 		if (IsColliding(dudeX, dudeY, dudeWidth, dudeHeight, poo0X, poo0Y, pooWidth, pooHeight))
 		{
 			poo0IsEaten = true;
@@ -29047,6 +29061,18 @@ bool Game::IsColliding(int x0, int y0, int width0, int height0,
 		y0 <= bottom1;
 }
 
+int Game::HitWallX(int x, int vx, int width)
+{
+	if (x <= 0 || x + width >= gfx.ScreenWidth) return -vx;
+	else return vx;
+}
+
+int Game::HitWallY(int y, int vy, int height)
+{
+	if (y <= 0 || y + height >= gfx.ScreenHeight) return -vy;
+	else return vy;
+}
+
 void Game::ComposeFrame()
 {
 	if (!isStarted)
@@ -29063,15 +29089,15 @@ void Game::ComposeFrame()
 		DrawFace(dudeX, dudeY);
 		if (!poo0IsEaten)
 		{
-			DrawPoo(poo0X, poo0Y);
+			DrawPoo(poo0X + v0X, poo0Y +v0Y);
 		}
 		if (!poo1IsEaten)
 		{
-			DrawPoo(poo1X, poo1Y);
+			DrawPoo(poo1X + v1X, poo1Y + v1Y);
 		}
 		if (!poo2IsEaten)
 		{
-			DrawPoo(poo2X, poo2Y);
+			DrawPoo(poo2X + v2X, poo2Y + v2Y);
 		}
 	}
 }
