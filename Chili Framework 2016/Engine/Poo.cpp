@@ -31,7 +31,7 @@ void Poo::Update()
 	}
 }
 
-void Poo::ProcessConsumption( Dude& dude)
+void Poo::ProcessConsumption( const Dude& dude)
 {
 	const int dudeRight = dude.x + dude.width;
 	const int dudeBottom = dude.y + dude.height;
@@ -47,7 +47,7 @@ void Poo::ProcessConsumption( Dude& dude)
 	}
 }
 
-void Poo::Draw( Graphics& gfx )
+void Poo::Draw( Graphics& gfx ) const
 {
 	gfx.PutPixel(14 + x, 0 + y, 138, 77, 0);
 	gfx.PutPixel(7 + x, 1 + y, 138, 77, 0);

@@ -5,9 +5,9 @@
 class Poo
 {
 public:
-	void Update();
-	void ProcessConsumption(Dude& dude);
-	void Draw( Graphics& gfx);
+	void Update(); //mutates variables underneath
+	void ProcessConsumption(const Dude& dude); //mutates variables, but only reads Dude
+	void Draw( Graphics& gfx) const; //non-mutating member-function
 	int x;
 	int y;
 	int vx;
