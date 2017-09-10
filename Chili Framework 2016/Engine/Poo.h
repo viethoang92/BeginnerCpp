@@ -7,9 +7,8 @@ class Poo
 public:
 	void Init(int in_x, int in_y, int in_vx, int in_vy);
 	void Update(); //mutates variables underneath
-	void ProcessConsumption(const Dude& dude); //mutates variables, but only reads Dude
+	bool TestCollision(const Dude& dude) const; //mutates variables, but only reads Dude
 	void Draw( Graphics& gfx) const; //non-mutating member-function
-	bool IsEaten() const;
 private:
 	int x;
 	int y;
@@ -17,6 +16,5 @@ private:
 	int vy;
 	static constexpr int width = 24;
 	static constexpr int height = 24;
-	bool isEaten = false;
 	bool initialized = false;
 };

@@ -52,8 +52,9 @@ private:
 	std::uniform_int_distribution<int> xDist;
 	std::uniform_int_distribution<int> yDist;
 	Dude dude;
-	static constexpr int nPoo = 1000;
+	static constexpr int nPoo = 15;
 	Poo poos[nPoo];
 	bool isStarted = false;
+	bool isGameOver = false;
 	/********************************/
 };

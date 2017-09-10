@@ -43,7 +43,7 @@ void Poo::Update()
 	}
 }
 
-void Poo::ProcessConsumption( const Dude& dude)
+bool Poo::TestCollision( const Dude& dude) const
 {
 
 	assert(initialized == true);
@@ -52,13 +52,11 @@ void Poo::ProcessConsumption( const Dude& dude)
 	const int pooRight = x + width;
 	const int pooBottom = y + height;
 
-	if (dudeRight >= x &&
+	return 
+		dudeRight >= x &&
 		dude.GetX() <= pooRight &&
 		dudeBottom >= y &&
-		dude.GetY() <= pooBottom)
-	{
-		isEaten = true;
-	}
+		dude.GetY() <= pooBottom;
 }
 
 void Poo::Draw( Graphics& gfx ) const
@@ -298,9 +296,3 @@ void Poo::Draw( Graphics& gfx ) const
 	gfx.PutPixel(6 + x, 23 + y, 51, 28, 0);
 }
 
-bool Poo::IsEaten() const
-{
-
-	assert(initialized == true);
-	return isEaten;
-}
