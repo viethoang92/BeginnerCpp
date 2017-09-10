@@ -1,6 +1,7 @@
 #include "Dude.h"
 #include "Graphics.h"
 
+
 void Dude::ClampToScreen()
 {
 	const int right = x + width;
@@ -343,4 +344,44 @@ void Dude::Draw(Graphics& gfx) const
 	gfx.PutPixel(11 + x, 19 + y, 0, 0, 0);
 	gfx.PutPixel(12 + x, 19 + y, 0, 0, 0);
 
+}
+
+void Dude::Update(const Keyboard & kbd)
+{
+	if (kbd.KeyIsPressed(VK_RIGHT))
+	{
+		x += speed;
+	}
+	if (kbd.KeyIsPressed(VK_LEFT))
+	{
+		x -= speed;
+	}
+	if (kbd.KeyIsPressed(VK_DOWN))
+	{
+		y += speed;
+	}
+	if (kbd.KeyIsPressed(VK_UP))
+	{
+		y -= speed;
+	}
+}
+
+int Dude::GetX() const
+{
+	return x;
+}
+
+int Dude::GetY() const
+{
+	return y;
+}
+
+int Dude::GetWidth() const
+{
+	return width;
+}
+
+int Dude::GetHeight() const
+{
+	return height;
 }
