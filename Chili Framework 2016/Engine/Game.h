@@ -26,6 +26,7 @@
 #include "Poo.h"
 #include "Dude.h"
 #include "Goal.h"
+#include "Meter.h"
 #include <random>
 
 class Game
@@ -54,6 +55,7 @@ private:
 	std::uniform_int_distribution<int> yDist;
 	Dude dude;
 	Goal goal;
+	Meter meter;
 	static constexpr int nPoo = 15;
 	Poo poos[nPoo];
 	bool isStarted = false;
