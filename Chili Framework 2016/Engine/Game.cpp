@@ -28,7 +28,8 @@ Game::Game(MainWindow& wnd)
 	gfx(wnd),
 	rng( rd()),
 	xDist( 0,770 ),
-	yDist( 0,570)
+	yDist( 0,570),
+	goal( xDist( rng ), yDist( rng ) )
 {
 	std::uniform_int_distribution<int> vDist(-1, 1);
 	for (int i = 0; i < nPoo; i++)
@@ -59,6 +60,11 @@ void Game::UpdateModel()
 			{
 				isGameOver = true;
 			}
+		}
+
+		if (goal.TestCollision(dude))
+		{
+			goal.Respawn(xDist(rng), yDist(rng));
 		}
 
 	}
@@ -28428,6 +28434,7 @@ void Game::ComposeFrame()
 	}
 	else
 	{
+		goal.Draw(gfx);
 		for (int i = 0; i < nPoo; i++)
 		{
 			poos[i].Draw(gfx);
